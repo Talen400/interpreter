@@ -10,35 +10,40 @@ import lib_interptreter as lib
 program_filepath = sys.argv[1]
 
 program_file = []
+program_line = []
 
 with open(program_filepath, 'r') as program_file:
-    program_file = [line for line in program_file.readline() ]
+    program_file = [line for line in program_file.readlines() ]
 
-print(program_file)
 
 program = []
-indice = 0
 
+for step in range(len(program_file)):
+        program_line = [ word for word in program_file[step]]
+        program_command = []
+        
+        #print(program_line)
 
-for line in program_file:
+        i = 0
 
-    two_points = 0
-    string_word = ""
+        while program_line[i] != ":" :
+              if program_line[i] != ' ':
+                   program_command.append(program_line[i])
+              i += 1
 
-    if line == ' ':
-        continue
+        then_two_points = []
 
-    if line == ':' :
-        two_points = program_file.index(line);
-        string_word = ''.join((program_file[:two_points])).strip()
-        program.append(string_word)
-        indice += 1
-    
-    if string_word == '/sum':
-        numbers = lib.analisy(program_file[two_points:])
-        program.append(numbers)
-        indice += 1
+        while program_line[i] != ';':
+              if program_line[i] != ' ' and program_line[i] != ':':
+                    then_two_points.append(program_line[i])
+              i += 1
+        program.append(''.join(program_command))
+        program.append(then_two_points)
 
-for word in program:
-    if word == "/sum":
-        print(sum(program[1]))
+print(program)
+i = 0
+for arg in program:
+      i += 1
+      if arg == "/sum":
+            numbers = lib.is_num(program[i])
+            print(sum(numbers))

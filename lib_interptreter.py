@@ -1,9 +1,8 @@
 def error(num):
-    try:
-        float(num)
-        return True
+    try:       
+        return int(num)
     except:
-        return False
+        return error_file()
         
 def analisy(args):
     a = []
@@ -17,10 +16,11 @@ def is_num(args):
 
     new_args = []
 
-    if error(args) :
-        for i in args:
-            new_arg = int(args[i])
-            new_args.append(new_arg)      
-        return new_args
-    else:
-        return "Error unexpected"
+    for arg in args :
+        new_args.append(error(arg))
+    
+    return new_args
+
+def error_file():
+    print("Unexpected Error")
+    exit(1)
