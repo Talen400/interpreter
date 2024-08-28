@@ -39,8 +39,7 @@ for step in range(len(program_file)):
               i += 1
         program.append(''.join(program_command))
         program.append(then_two_points)
-
-print(program)
+        
 i = 0
 for arg in program:
       i += 1
