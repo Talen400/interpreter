@@ -1,48 +1,34 @@
-"""
-Talen | 27/08/2024 | dd/mm/yyyy
-
-"""
 import sys
-import lib_interptreter as lib
 
-# Tokening
+def lex(token):
+    i = 0
+    while i < len(token):
+        arg = token[i]["list"].split()
+        pointer = 0
+        while pointer < len(arg):
+            
+            pointer += 1
+        i += 1
+            
 
-program_filepath = sys.argv[1]
+    return token    
 
-program_file = []
-program_line = []
+def lines(file):
+    lines = []
+    value = 0
+    i = 0
+    while i < len(file):
+        lines.append({"type": "line", "value": value, "list": file[i]})
+        i += 1
+        value += 1
+        pass
+    return lines
 
-with open(program_filepath, 'r') as program_file:
-    program_file = [line for line in program_file.readlines() ]
-
-
-program = []
-
-for step in range(len(program_file)):
-        program_line = [ word for word in program_file[step]]
-        program_command = []
-        
-        #print(program_line)
-
-        i = 0
-
-        while program_line[i] != ":" :
-              if program_line[i] != ' ':
-                   program_command.append(program_line[i])
-              i += 1
-
-        then_two_points = []
-
-        while program_line[i] != ';':
-              if program_line[i] != ' ' and program_line[i] != ':':
-                    then_two_points.append(program_line[i])
-              i += 1
-        program.append(''.join(program_command))
-        program.append(then_two_points)
-        
-i = 0
-for arg in program:
-      i += 1
-      if arg == "/sum":
-            numbers = lib.is_num(program[i])
-            print(sum(numbers))
+def main():
+    program_file_path = sys.argv[1]
+    program = []
+    with open(program_file_path, 'r') as program_file:
+        program = lines([line for line in program_file])
+    lex(program)
+    print(program)
+main()
