@@ -1,5 +1,3 @@
-
-
 def is_digit(arg):
     return (arg >= '0' and arg <= '9')
 
@@ -23,10 +21,23 @@ def lex(input):
              out.append({"type": "number", "value": arg})
         elif is_name(arg):
              out.append({"type": "identifier", "value": arg})
-        elif ' ':
+        elif arg == '+':
+             out.append({"type": "operator", "value": arg})
+        elif arg == '(':
+             out.append({"type": "left parenthesis", "value": arg})
+        elif arg == ')':
+             out.append({"type": "right parenthesis", "value": arg})
+        elif arg == '-':
+             out.append({"type": "operator", "value": arg})
+        elif arg == '*':
+             out.append({"type": "operator", "value": arg})
+        elif arg == '/':
+             out.append({"type": "operator", "value": arg})
+        elif arg == ' ':
              pass
+        
         else:
-             print("Error lexic")
+             print("Error lexic: '" + arg + "' Unexpected")
              exit(1)
 
         pointer += 1
