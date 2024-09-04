@@ -15,8 +15,6 @@ def lex(input):
         
         if arg == '=':
              out.append({"type": "operator", "value": arg})
-        elif arg == ';':
-             out.append({"type": "end", "value": arg})
         elif is_digit(arg):
              out.append({"type": "number", "value": arg})
         elif is_name(arg):
@@ -31,8 +29,6 @@ def lex(input):
              out.append({"type": "operator", "value": arg})
         elif arg == '*':
              out.append({"type": "operator", "value": arg})
-        elif arg == '/':
-             out.append({"type": "operator", "value": arg})
         elif arg == ' ':
              pass
         
@@ -43,20 +39,43 @@ def lex(input):
         pointer += 1
     return out
 
-def parse(input):
-     for dic in input:
-          match dic["type"]:
-               case "identifier":
-                    return dic
-               case "number":
-                    return dic
-               case "=":
-                    pass
-               case ";":
-                    pass
-               case tpy :
-                    print("Systax Error: unexpected" + tpy + ".")
-                    exit(1)
+def pick_type_pop(input, num):
+     pick = input.pop(num)
+     return pick["type"]
+
+def empty(input):
+     return len(input) == 0
+
+def parse(input, inner):
+
+     res = []
+
+     while len(input) > 0:
+
+          arg = input[0]
+          current = pick_type_pop(input, 0)
+
+          if current == 'left parenthesis':
+               res.append(parse(input, True))
+          elif current == 'right parenthesis':
+               if inner:
+                    return res
+               else:
+                    print("Systan error: unclosed expression")
+                    return None
+          else:
+               res.append(arg)
+     
+     if inner:
+          print("Unmatched expression")
+     else:
+          return res
+
+     
+     return parse(input, False)
+
+def evaluator ():
+     pass
 
 def read_file(path):
     file = open(path, "r")
@@ -66,7 +85,7 @@ def read_file(path):
 def main():
     input = read_file("program1.lisp")
     tokens = lex(input)
-    print(tokens)
-    tree = parse(tokens)
+    tree = parse(tokens, False)
+    print(tree)
     
 main()
